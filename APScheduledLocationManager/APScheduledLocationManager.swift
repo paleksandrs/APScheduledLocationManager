@@ -48,6 +48,7 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         manager.allowsBackgroundLocationUpdates = true
         manager.desiredAccuracy = kCLLocationAccuracyBest;
         manager.distanceFilter = kCLDistanceFilterNone;
+        manager.pausesLocationUpdatesAutomatically = false
         manager.delegate = self
     }
     
