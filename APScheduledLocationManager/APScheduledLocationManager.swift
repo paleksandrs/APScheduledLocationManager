@@ -55,7 +55,7 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         
         manager.requestAlwaysAuthorization()
     }
-
+    
     public func startUpdatingLocation(interval: TimeInterval, acceptableLocationAccuracy: CLLocationAccuracy = 100) {
         
         if isRunning {
@@ -161,7 +161,7 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
     private func stopCheckLocationTimer() {
         
         if let timer = checkLocationTimer {
-            
+
             timer.invalidate()
             checkLocationTimer=nil;
         }

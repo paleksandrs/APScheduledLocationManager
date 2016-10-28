@@ -31,7 +31,7 @@ class ViewController: UIViewController, APScheduledLocationManagerDelegate {
     
     func startUpdatingLocation()  {
         
-         manager.startUpdatingLocation(interval: 170 )
+         manager.startUpdatingLocation(interval: 10, acceptableLocationAccuracy: 100)
     }
     
     func scheduledLocationManager(_ manager: APScheduledLocationManager, didUpdateLocations locations: [CLLocation]) {
