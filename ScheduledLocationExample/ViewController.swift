@@ -13,25 +13,32 @@ import CoreLocation
 class ViewController: UIViewController, APScheduledLocationManagerDelegate {
     
     private var manager: APScheduledLocationManager!
-
+    @IBOutlet weak var startStopButton: UIButton!
     @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         manager = APScheduledLocationManager(delegate: self)
-        
-        if CLLocationManager.authorizationStatus() == .authorizedAlways {
-            
-           startUpdatingLocation()
-        }else{
-            manager.requestAlwaysAuthorization()
-        }
     }
     
-    func startUpdatingLocation()  {
+    @IBAction func startStop(_ sender: AnyObject) {
         
-         manager.startUpdatingLocation(interval: 10, acceptableLocationAccuracy: 100)
+        if manager.isRunning {
+            
+            startStopButton.setTitle("start", for: .normal)
+            manager.stoptUpdatingLocation()
+        }else{
+            
+            if CLLocationManager.authorizationStatus() == .authorizedAlways {
+                
+                startStopButton.setTitle("stop", for: .normal)
+                manager.startUpdatingLocation(interval: 60, acceptableLocationAccuracy: 100)
+            }else{
+                
+                manager.requestAlwaysAuthorization()
+            }
+        }
     }
     
     func scheduledLocationManager(_ manager: APScheduledLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -47,15 +54,9 @@ class ViewController: UIViewController, APScheduledLocationManagerDelegate {
     
     func scheduledLocationManager(_ manager: APScheduledLocationManager, didFailWithError error: Error) {
         
-        
     }
     
     func scheduledLocationManager(_ manager: APScheduledLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
-        if CLLocationManager.authorizationStatus() == .authorizedAlways && !manager.isRunning {
-            
-            startUpdatingLocation()
-        }
     }
 }
-

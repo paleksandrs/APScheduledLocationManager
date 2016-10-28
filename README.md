@@ -32,7 +32,7 @@ func scheduledLocationManager(_ manager: APScheduledLocationManager, didChangeAu
 ````
 ##### 4. Request authorized always permission
 
-You can use ````requestAlwaysAuthorization()```` helper method of ````APScheduledLocationManager```` or your own implementation. 
+You can use ````requestAlwaysAuthorization```` helper method of ````APScheduledLocationManager```` or your own implementation. 
 
 
 
@@ -46,9 +46,12 @@ There are 2 options to adjust the location manager:
 - ````interval: TimeInterval```` - interval with which the location will be gathered. The range is between 2 - 170 seconds, lower or higher values will be overwritten
 - ````acceptableLocationAccuracy: CLLocationAccuracy```` - the location manager will wait till locations with desired accuracy are retrieved. 
 
+
+##### 5. To stop location manager call ````stopLocationManager````
+
 ## Example 
 
-There is working example ````ScheduledLocationExample```` in the projet
+See an example app ````ScheduledLocationExample```` in the repository 
 
 ## License
 
