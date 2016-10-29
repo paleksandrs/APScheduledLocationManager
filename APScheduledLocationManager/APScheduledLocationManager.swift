@@ -22,13 +22,16 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
     
     private let MaxBGTime: TimeInterval = 170;
     private let MinBGTime: TimeInterval = 2;
+    private let WaitForLocationsTime: TimeInterval = 3;
     
     private let delegate: APScheduledLocationManagerDelegate
     private let manager = CLLocationManager()
     
     private var isManagerRunning = false
     private var checkLocationTimer: Timer?
+    private var waitTimer: Timer?
     private var bgTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
+    private var lastLocations = [CLLocation]()
     
     public private(set) var acceptableLocationAccuracy: CLLocationAccuracy = 100
     public private(set) var checkLocationInterval: TimeInterval = 10
@@ -140,15 +143,10 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         guard isManagerRunning else { return }
         guard locations.count>0 else { return }
         
-        let location = locations.last!
+        lastLocations = locations
         
-        if location.horizontalAccuracy < acceptableLocationAccuracy {
-            
-            startBackgroundTask()
-            startCheckLocationTimer()
-            stopLocationManager()
-            
-            delegate.scheduledLocationManager(self, didUpdateLocations: locations)
+        if waitTimer == nil {
+            startWaitTimer()
         }
     }
     
@@ -178,6 +176,45 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         self.perform(#selector(stopAndResetBgTaskIfNeeded), with: nil, afterDelay: 1)
     }
     
+    private func startWaitTimer() {
+        stopWaitTimer()
+    
+        waitTimer = Timer.scheduledTimer(timeInterval: WaitForLocationsTime, target: self, selector: #selector(waitTimerEvent), userInfo: nil, repeats: false)
+    }
+    
+    private func stopWaitTimer() {
+        
+        if let timer = waitTimer {
+            
+            timer.invalidate()
+            waitTimer=nil;
+        }
+    }
+    
+    func waitTimerEvent() {
+        
+        stopWaitTimer()
+        
+        if acceptableLocationAccuracyRetrieved() {
+            
+            startBackgroundTask()
+            startCheckLocationTimer()
+            stopLocationManager()
+            
+            delegate.scheduledLocationManager(self, didUpdateLocations: lastLocations)
+        }else{
+            
+            startWaitTimer()
+        }
+    }
+    
+    private func acceptableLocationAccuracyRetrieved() -> Bool {
+        
+        let location = lastLocations.last!
+        
+        return location.horizontalAccuracy < acceptableLocationAccuracy ? true : false
+    }
+   
     func stopAndResetBgTaskIfNeeded()  {
         
         if isManagerRunning {
