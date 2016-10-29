@@ -20,9 +20,10 @@ public protocol APScheduledLocationManagerDelegate {
 
 public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
     
-    private let MaxBGTime: TimeInterval = 170;
-    private let MinBGTime: TimeInterval = 2;
-    private let WaitForLocationsTime: TimeInterval = 3;
+    private let MaxBGTime: TimeInterval = 170
+    private let MinBGTime: TimeInterval = 2
+    private let MinAcceptableLocationAccuracy: CLLocationAccuracy = 5
+    private let WaitForLocationsTime: TimeInterval = 3
     
     private let delegate: APScheduledLocationManagerDelegate
     private let manager = CLLocationManager()
@@ -70,7 +71,7 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         checkLocationInterval = interval > MaxBGTime ? MaxBGTime : interval
         checkLocationInterval = interval < MinBGTime ? MinBGTime : interval
         
-        self.acceptableLocationAccuracy = acceptableLocationAccuracy
+        self.acceptableLocationAccuracy = acceptableLocationAccuracy < MinAcceptableLocationAccuracy ? MinAcceptableLocationAccuracy : acceptableLocationAccuracy
         
         isRunning = true
         
@@ -212,7 +213,7 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         
         let location = lastLocations.last!
         
-        return location.horizontalAccuracy < acceptableLocationAccuracy ? true : false
+        return location.horizontalAccuracy <= acceptableLocationAccuracy ? true : false
     }
    
     func stopAndResetBgTaskIfNeeded()  {
