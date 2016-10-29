@@ -1,7 +1,25 @@
 # APScheduledLocationManager
  [![license MIT](https://img.shields.io/cocoapods/l/JSQCoreDataKit.svg)][mitLink]
  
- Location manager that allows to get a background location update every *n* seconds.
+Location manager that allows to get background location updates every *n* seconds with desired location accuracy.
+ 
+*n* - range is between 2 - 170 seconds (limited by max allowed background task time)
+
+## Requirements
+* Xcode 8
+* Swift 3.0
+* iOS 9.0+
+
+## Installation
+
+##### [CocoaPods](http://cocoapods.org). Please use the latest CocoaPods as this framework is using Swift 3  
+
+````ruby
+use_frameworks!
+
+pod 'APScheduledLocationManager'
+
+````
  
 ## Usage 
 ##### 1. Configure Xcode project
