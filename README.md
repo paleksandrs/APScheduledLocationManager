@@ -28,12 +28,19 @@ In target ````Capabilities```` enable ````Background Modes```` and check ````Loc
 
 In ````Info.plist```` add ````NSLocationAlwaysUsageDescription```` key and value that will specify the reason for your app to access the user’s location information at all times.
 
-##### 2. Create instance of `APScheduledLocationManager`
+##### 2. Import `APScheduledLocationManager` and `CoreLocation`
+
+````swift
+import APScheduledLocationManager
+import CoreLocation
+````
+
+##### 3. Create instance of `APScheduledLocationManager`
 
 ````swift
 let manager = APScheduledLocationManager(delegate: self)
 ````
-##### 3. Confirm to ````APScheduledLocationManagerDelegate```` 
+##### 4. Confirm to ````APScheduledLocationManagerDelegate```` 
 
 ````swift
 func scheduledLocationManager(_ manager: APScheduledLocationManager, didFailWithError error: Error){
@@ -48,13 +55,13 @@ func scheduledLocationManager(_ manager: APScheduledLocationManager, didChangeAu
 
 }
 ````
-##### 4. Request authorized always permission
+##### 5. Request authorized always permission
 
 You can use ````requestAlwaysAuthorization```` helper method of ````APScheduledLocationManager```` or your own implementation. 
 
 
 
-##### 4. Start location manager when permission is granted
+##### 6. Start location manager when permission is granted
 
 ````swift
 manager.startUpdatingLocation(interval: 170, acceptableLocationAccuracy: 100)
@@ -65,11 +72,13 @@ There are 2 options to adjust the location manager:
 - ````acceptableLocationAccuracy: CLLocationAccuracy```` - the location manager will wait till locations with desired accuracy are retrieved. 
 
 
-##### 5. To stop location manager call ````stopLocationManager````
+##### 7. To stop location manager call ````stopLocationManager````
 
 ## Example 
 
-See an example app ````ScheduledLocationExample```` in the repository 
+See an example app ````ScheduledLocationExample```` in the repository
+
+Note, if you test on a stimulater edit scheme and set default location. 
 
 ## License
 
