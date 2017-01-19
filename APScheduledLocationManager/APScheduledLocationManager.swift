@@ -50,8 +50,8 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
     private func configureLocationManager(){
         
         manager.allowsBackgroundLocationUpdates = true
-        manager.desiredAccuracy = kCLLocationAccuracyBest;
-        manager.distanceFilter = kCLDistanceFilterNone;
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.distanceFilter = kCLDistanceFilterNone
         manager.pausesLocationUpdatesAutomatically = false
         manager.delegate = self
     }
@@ -163,7 +163,7 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         if let timer = checkLocationTimer {
 
             timer.invalidate()
-            checkLocationTimer=nil;
+            checkLocationTimer=nil
         }
     }
     
@@ -188,7 +188,7 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         if let timer = waitTimer {
             
             timer.invalidate()
-            waitTimer=nil;
+            waitTimer=nil
         }
     }
     
