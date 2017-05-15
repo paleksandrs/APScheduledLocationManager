@@ -27,7 +27,7 @@ class ViewController: UIViewController, APScheduledLocationManagerDelegate {
         if manager.isRunning {
             
             startStopButton.setTitle("start", for: .normal)
-            manager.stoptUpdatingLocation()
+            manager.stopUpdatingLocation()
         }else{
             
             if CLLocationManager.authorizationStatus() == .authorizedAlways {

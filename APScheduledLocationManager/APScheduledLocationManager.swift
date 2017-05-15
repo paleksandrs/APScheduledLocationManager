@@ -65,7 +65,7 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         
         if isRunning {
             
-            stoptUpdatingLocation()
+            stopUpdatingLocation()
         }
         
         checkLocationInterval = interval > MaxBGTime ? MaxBGTime : interval
@@ -79,10 +79,11 @@ public class APScheduledLocationManager: NSObject, CLLocationManagerDelegate {
         startLocationManager()
     }
     
-    public func stoptUpdatingLocation() {
+    public func stopUpdatingLocation() {
         
         isRunning = false
         
+        stopWaitTimer()
         stopLocationManager()
         stopBackgroundTask()
         stopCheckLocationTimer()
